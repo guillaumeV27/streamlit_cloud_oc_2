@@ -14,7 +14,7 @@ URL_MAPPER = {
     "local": "http://localhost:5000/predict/",
     "hosted": "https://credit-prediction-demo.onrender.com/predict/"
 }
-api_version = "local"  # Toggle ici si tu veux changer d'environnement
+api_version = "hosted"  # Toggle ici si tu veux changer d'environnement
 
 # Chargement de la base client (100 exemples)
 client_database = pd.read_csv("prod_client_database_example_100.csv")
