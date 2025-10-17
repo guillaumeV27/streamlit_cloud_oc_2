@@ -12,7 +12,7 @@ import gzip
 # Mapping des endpoints API
 URL_MAPPER = {
     "local": "http://localhost:5000/predict/",
-    "hosted": "https://credit-prediction-demo.onrender.com/predict/"
+    "hosted": "https://flask-api-predict.onrender.com/predict/"
 }
 api_version = "hosted"  # Toggle ici si tu veux changer d'environnement
 
