@@ -64,7 +64,8 @@ def main():
         # shap_values = pickle.load(f)
 
     # Liste des features à afficher et leur ordre fixe
-    features_to_show = ['EXT_SOURCE_1', 'EXT_SOURCE_2', 'EXT_SOURCE_3','PAYMENT_RATE', 'NAME_FAMILY_STATUS_Married', 'CODE_GENDER', 'AMT_ANNUITY', 'APPROVED_CNT_PAYMENT_MEAN']
+    # features_to_show = ['EXT_SOURCE_1', 'EXT_SOURCE_2', 'EXT_SOURCE_3','PAYMENT_RATE', 'NAME_FAMILY_STATUS_Married', 'CODE_GENDER', 'AMT_ANNUITY', 'APPROVED_CNT_PAYMENT_MEAN']
+    features_to_show = ['EXT_SOURCE_1', 'EXT_SOURCE_2', 'EXT_SOURCE_3', 'CODE_GENDER','PAYMENT_RATE', 'NAME_FAMILY_STATUS_Married', 'DAYS_ID_PUBLISH','ACTIVE_DAYS_CREDIT_MAX']
     fixed_order = features_to_show  # tu peux les séparer si besoin
 
     # Sélection du client (id)
