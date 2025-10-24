@@ -113,7 +113,7 @@ def main():
                     client_features.loc[f] = "Donnée non renseignée"
 
             # Affichage dans Streamlit
-            st.write("### Valeurs du client sélectionné")
+            st.write("### Valeurs initiales du client sélectionné")
             st.dataframe(client_features)
 
         with st.container():
