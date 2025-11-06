@@ -45,6 +45,45 @@ def request_prediction(data, endpoint_url):
 
     return response.json()
 
+def build_feature_vector(client_row, model_features):
+    """
+    Construit un vecteur de features cohérent avec celles attendues par le modèle.
+    Gestion auto : encodages, dérivés, valeurs absentes.
+    """
+    data = {}
+
+    for feature in model_features:
+
+        # Feature dérivée : PAYMENT_RATE
+        if feature == "PAYMENT_RATE":
+            data[feature] = float(client_row["AMT_ANNUITY"]) / float(client_row["AMT_CREDIT"])
+            continue
+
+        # Encodage : CODE_GENDER → 1 si F
+        if feature == "CODE_GENDER":
+            data[feature] = 1 if client_row["CODE_GENDER"] == "F" else 0
+            continue
+
+        # Encodage one-hot : NAME_FAMILY_STATUS_Married
+        if feature == "NAME_FAMILY_STATUS_Married":
+            data[feature] = 1 if client_row["NAME_FAMILY_STATUS"] == "Married" else 0
+            continue
+
+        # Cas général : la feature existe dans la base
+        if feature in client_row.index:
+            value = client_row[feature]
+            # Remplacer NaN / inf par 0
+            if pd.isna(value) or np.isinf(value):
+                value = 0.0
+            data[feature] = float(value)
+            continue
+
+        # Si la feature n'existe pas → valeur 0.0 avec warning
+        st.warning(f"⚠️ Feature absente dans la base : {feature} → Assignation automatique à 0.0")
+        data[feature] = 0.0
+
+    return data
+
 
 # Main Streamlit app
 def main():
@@ -186,7 +225,7 @@ def main():
             } """
 
             # ✅ Nouveau dictionnaire aligné avec tes nouvelles features
-            data = {
+            '''data = {
                 'EXT_SOURCE_1': client_row['EXT_SOURCE_1'].values[0],
                 'EXT_SOURCE_2': client_row['EXT_SOURCE_2'].values[0],
                 'EXT_SOURCE_3': client_row['EXT_SOURCE_3'].values[0],
@@ -199,10 +238,18 @@ def main():
                 'DAYS_ID_PUBLISH': client_row['DAYS_ID_PUBLISH'].values[0],
 
                 'ACTIVE_DAYS_CREDIT_MAX': client_row['ACTIVE_DAYS_CREDIT_MAX'].values[0]
-            }
+            }'''
+
+            # Récupération des features attendues par le modèle
+            model_features = shap_values.feature_names
+
+            # Construction automatique du vecteur de features
+            client_row_series = client_row.squeeze()  # Convertir DataFrame → Series
+            data = build_feature_vector(client_row_series, model_features)
 
             with st.spinner("Envoi de la requête à l'API..."):
                 try:
+                    # pred = request_prediction(data, URL_MAPPER[api_version])
                     pred = request_prediction(data, URL_MAPPER[api_version])
                     st.success("Requête API réussie :white_check_mark:")
 
