@@ -56,33 +56,42 @@ def build_feature_vector(client_row, model_features):
 
         # Feature dérivée : PAYMENT_RATE
         if feature == "PAYMENT_RATE":
-            data[feature] = float(client_row["AMT_ANNUITY"]) / float(client_row["AMT_CREDIT"])
+            try:
+                data[feature] = float(client_row["AMT_ANNUITY"]) / float(client_row["AMT_CREDIT"])
+            except:
+                data[feature] = 0.0
             continue
 
         # Encodage : CODE_GENDER → 1 si F
         if feature == "CODE_GENDER":
-            data[feature] = 1 if client_row["CODE_GENDER"] == "F" else 0
+            data[feature] = 1 if client_row.get("CODE_GENDER", None) == "F" else 0
             continue
 
         # Encodage one-hot : NAME_FAMILY_STATUS_Married
         if feature == "NAME_FAMILY_STATUS_Married":
-            data[feature] = 1 if client_row["NAME_FAMILY_STATUS"] == "Married" else 0
+            data[feature] = 1 if client_row.get("NAME_FAMILY_STATUS", None) == "Married" else 0
             continue
 
-        # Cas général : la feature existe dans la base
+        # Cas général : si la feature existe dans la base client
         if feature in client_row.index:
             value = client_row[feature]
-            # Remplacer NaN / inf par 0
-            if pd.isna(value) or np.isinf(value):
-                value = 0.0
-            data[feature] = float(value)
+        else:
+            st.warning(f"⚠️ Feature absente dans la base : {feature} → Assignation automatique 0.0")
+            data[feature] = 0.0
             continue
 
-        # Si la feature n'existe pas → valeur 0.0 avec warning
-        st.warning(f"⚠️ Feature absente dans la base : {feature} → Assignation automatique à 0.0")
-        data[feature] = 0.0
+        # Nettoyage sécurisé de la valeur
+        try:
+            v = float(value)
+            if pd.isna(v) or np.isinf(v):
+                v = 0.0
+            data[feature] = v
+        except:
+            # Valeurs non numériques → on encode par 0
+            data[feature] = 0.0
 
     return data
+
 
 
 # Main Streamlit app
@@ -249,7 +258,6 @@ def main():
 
             with st.spinner("Envoi de la requête à l'API..."):
                 try:
-                    # pred = request_prediction(data, URL_MAPPER[api_version])
                     pred = request_prediction(data, URL_MAPPER[api_version])
                     st.success("Requête API réussie :white_check_mark:")
 
