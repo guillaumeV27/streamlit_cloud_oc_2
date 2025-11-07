@@ -76,7 +76,7 @@ def build_feature_vector(client_row, model_features):
         if feature in client_row.index:
             value = client_row[feature]
         else:
-            # st.warning(f"⚠️ Feature absente dans la base : {feature} → Assignation automatique 0.0")
+            st.warning(f"⚠️ Feature absente dans la base : {feature} → Assignation automatique 0.0")
             data[feature] = 0.0
             continue
 
