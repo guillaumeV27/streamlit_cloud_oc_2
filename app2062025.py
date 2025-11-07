@@ -232,7 +232,7 @@ def main():
             } """
 
             # ✅ Nouveau dictionnaire aligné avec tes nouvelles features
-            '''data = {
+            """data = {
                 'EXT_SOURCE_1': client_row['EXT_SOURCE_1'].values[0],
                 'EXT_SOURCE_2': client_row['EXT_SOURCE_2'].values[0],
                 'EXT_SOURCE_3': client_row['EXT_SOURCE_3'].values[0],
@@ -245,7 +245,7 @@ def main():
                 'DAYS_ID_PUBLISH': client_row['DAYS_ID_PUBLISH'].values[0],
 
                 'ACTIVE_DAYS_CREDIT_MAX': client_row['ACTIVE_DAYS_CREDIT_MAX'].values[0]
-            }'''
+            }"""
 
             # Récupération des features attendues par le modèle
             # model_features = shap_values.feature_names
