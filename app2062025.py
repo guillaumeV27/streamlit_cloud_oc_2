@@ -76,7 +76,7 @@ def build_feature_vector(client_row, model_features):
         if feature in client_row.index:
             value = client_row[feature]
         else:
-            st.warning(f"⚠️ Feature absente dans la base : {feature} → Assignation automatique 0.0")
+            # st.warning(f"⚠️ Feature absente dans la base : {feature} → Assignation automatique 0.0")
             data[feature] = 0.0
             continue
 
@@ -91,8 +91,6 @@ def build_feature_vector(client_row, model_features):
             data[feature] = 0.0
 
     return data
-
-
 
 # Main Streamlit app
 def main():
@@ -250,11 +248,11 @@ def main():
             }'''
 
             # Récupération des features attendues par le modèle
-            model_features = shap_values.feature_names
+            # model_features = shap_values.feature_names
 
             # Construction automatique du vecteur de features
             client_row_series = client_row.squeeze()  # Convertir DataFrame → Series
-            data = build_feature_vector(client_row_series, model_features)
+            data = build_feature_vector(client_row_series, features_to_show)
 
             with st.spinner("Envoi de la requête à l'API..."):
                 try:
