@@ -212,44 +212,44 @@ def main():
                 return
             
             # top_features = ['EXT_SOURCE_3', 'EXT_SOURCE_2', 'PAYMENT_RATE', 'EXT_SOURCE_1', 'NAME_FAMILY_STATUS_Married', 'CODE_GENDER', 'AMT_ANNUITY', 'APPROVED_CNT_PAYMENT_MEAN']
-            """ 
-            data = {
-                'EXT_SOURCE_3': client_row['EXT_SOURCE_3'].values[0],
-                'EXT_SOURCE_2': client_row['EXT_SOURCE_2'].values[0],
-                'EXT_SOURCE_1': client_row['EXT_SOURCE_1'].values[0],
-                'AMT_ANNUITY': client_row['AMT_ANNUITY'].values[0],
+            
+            # data = {
+            #     'EXT_SOURCE_3': client_row['EXT_SOURCE_3'].values[0],
+            #     'EXT_SOURCE_2': client_row['EXT_SOURCE_2'].values[0],
+            #     'EXT_SOURCE_1': client_row['EXT_SOURCE_1'].values[0],
+            #     'AMT_ANNUITY': client_row['AMT_ANNUITY'].values[0],
                 
-                # PAYMENT_RATE = AMT_ANNUITY / AMT_CREDIT
-                'PAYMENT_RATE': client_row['AMT_ANNUITY'].values[0] / client_row['AMT_CREDIT'].values[0],
+            #     # PAYMENT_RATE = AMT_ANNUITY / AMT_CREDIT
+            #     'PAYMENT_RATE': client_row['AMT_ANNUITY'].values[0] / client_row['AMT_CREDIT'].values[0],
                 
-                # Encodage binaire de NAME_FAMILY_STATUS
-                'NAME_FAMILY_STATUS_Married': 1 if client_row['NAME_FAMILY_STATUS'].values[0] == 'Married' else 0,
+            #     # Encodage binaire de NAME_FAMILY_STATUS
+            #     'NAME_FAMILY_STATUS_Married': 1 if client_row['NAME_FAMILY_STATUS'].values[0] == 'Married' else 0,
                 
-                # Encodage binaire de CODE_GENDER
-                'CODE_GENDER_F': 1 if client_row['CODE_GENDER'].values[0] == 'F' else 0,
+            #     # Encodage binaire de CODE_GENDER
+            #     'CODE_GENDER_F': 1 if client_row['CODE_GENDER'].values[0] == 'F' else 0,
                 
-                # APPROVED_CNT_PAYMENT_MEAN n'existe pas => valeur fictive (à remplacer si enrichissement disponible)
-                'APPROVED_CNT_PAYMENT_MEAN': 0.0  # ou np.nan
-            }
-            """
+            #     # APPROVED_CNT_PAYMENT_MEAN n'existe pas => valeur fictive (à remplacer si enrichissement disponible)
+            #     'APPROVED_CNT_PAYMENT_MEAN': 0.0  # ou np.nan
+            # }
+            
 
             # ✅ Nouveau dictionnaire aligné avec tes nouvelles features
-            """
-            data = {
-                'EXT_SOURCE_1': client_row['EXT_SOURCE_1'].values[0],
-                'EXT_SOURCE_2': client_row['EXT_SOURCE_2'].values[0],
-                'EXT_SOURCE_3': client_row['EXT_SOURCE_3'].values[0],
+            
+            # data = {
+            #     'EXT_SOURCE_1': client_row['EXT_SOURCE_1'].values[0],
+            #     'EXT_SOURCE_2': client_row['EXT_SOURCE_2'].values[0],
+            #     'EXT_SOURCE_3': client_row['EXT_SOURCE_3'].values[0],
 
-                'CODE_GENDER': 1 if client_row['CODE_GENDER'].values[0] == 'F' else 0,
-                'NAME_FAMILY_STATUS_Married': 1 if client_row['NAME_FAMILY_STATUS'].values[0] == 'Married' else 0,
+            #     'CODE_GENDER': 1 if client_row['CODE_GENDER'].values[0] == 'F' else 0,
+            #     'NAME_FAMILY_STATUS_Married': 1 if client_row['NAME_FAMILY_STATUS'].values[0] == 'Married' else 0,
 
-                'PAYMENT_RATE': client_row['AMT_ANNUITY'].values[0] / client_row['AMT_CREDIT'].values[0],
+            #     'PAYMENT_RATE': client_row['AMT_ANNUITY'].values[0] / client_row['AMT_CREDIT'].values[0],
 
-                'DAYS_ID_PUBLISH': client_row['DAYS_ID_PUBLISH'].values[0],
+            #     'DAYS_ID_PUBLISH': client_row['DAYS_ID_PUBLISH'].values[0],
 
-                'ACTIVE_DAYS_CREDIT_MAX': client_row['ACTIVE_DAYS_CREDIT_MAX'].values[0]
-            }
-            """
+            #     'ACTIVE_DAYS_CREDIT_MAX': client_row['ACTIVE_DAYS_CREDIT_MAX'].values[0]
+            # }
+            
 
             # Récupération des features attendues par le modèle
             # model_features = shap_values.feature_names
